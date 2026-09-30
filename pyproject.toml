@@ -1,0 +1,77 @@
+# Copyright 2026 Canonical Ltd.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+[project]
+name = "pytest-gherkinator"
+version = "0.1.0"
+description = "A pytest plugin that orders, marks, and skips BDD scenarios by their gherkinator classification tags"
+readme = "README.md"
+authors = [
+    { name = "Jason C. Nucciarone", email = "nuccitheboss@ubuntu.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "pytest-bdd ~= 8.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project.optional-dependencies]
+dev = [
+    # Test deps
+    "coverage[toml] ~= 7.6",
+    "pytest ~= 9.0",
+
+    # Linting
+    "ruff",
+    "codespell",
+    "pyright",
+]
+
+[project.entry-points.pytest11]
+pytest-gherkinator = "pytest_gherkinator._main"
+
+[tool.coverage.run]
+branch = true
+include = [
+    "src/**/*.py"
+]
+
+[tool.coverage.report]
+show_missing = true
+
+[tool.ruff]
+line-length = 99
+extend-exclude = ["__pycache__", "*.egg_info"]
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "C", "N", "D", "I001"]
+extend-ignore = [
+    "D203",
+    "D204",
+    "D213",
+    "D215",
+    "D400",
+    "D404",
+    "D406",
+    "D407",
+    "D408",
+    "D409",
+    "D413",
+]
+ignore = ["E501", "D107"]
+per-file-ignores = {"tests/*" = ["D100","D101","D102","D103","D104"]}
+mccabe = { "max-complexity" = 15 }
